@@ -59,7 +59,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
-// Registro (opcional si lo necesitas también con DB)
+// Registro users
+
 export const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, password, role } = req.body;
@@ -70,6 +71,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 
     const pool = await poolPromise;
 
+    // Verificar si ya existe usuario
     const exists = await pool.request()
       .input('username', sql.VarChar, username)
       .query('SELECT * FROM users WHERE username = @username');
@@ -78,14 +80,15 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       return res.status(400).json({ error: 'Usuario ya existe' });
     }
 
+    // Hashear contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Insertar nuevo usuario
     await pool.request()
       .input('username', sql.VarChar, username)
       .input('password', sql.VarChar, hashedPassword)
       .input('role', sql.VarChar, role)
-      .query('SELECT * FROM users WHERE username = @username');
-;
+      .query('INSERT INTO users (username, passwordHash, role) VALUES (@username, @password, @role)');
 
     return res.status(201).json({ message: 'Usuario registrado correctamente' });
 
