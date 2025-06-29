@@ -20,17 +20,22 @@
   "homepage": "https://github.com/oliverpes/api_citas_dentales#readme",
   "description": "",
   "dependencies": {
-    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
-    "dotenv": "^16.5.0",
+    "dotenv": "^16.6.1",
     "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "mssql": "^11.0.1",
+    "pg": "^8.16.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/knex": "^0.15.2",
+    "@types/mssql": "^9.1.7",
     "@types/node": "^24.0.3",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
