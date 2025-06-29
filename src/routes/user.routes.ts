@@ -1,9 +1,12 @@
 import { Router } from 'express';
-import { getUsers } from '../controllers/user.controller';
-import { authMiddleware, requireRole } from '../middlewares/auth';
+import { getUsers, createUser } from '../controllers/user.controller';
 
 const router = Router();
-router.use(authMiddleware, requireRole('admin'));
+
+// Ruta para obtener usuarios
 router.get('/', getUsers);
+
+// Ruta para crear nuevo usuario
+router.post('/', createUser);
 
 export default router;

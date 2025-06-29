@@ -14,7 +14,8 @@ app.use(cors());
 app.use(express.json());
 /* rutas de accesso al api */
 app.use('/auth', authRoutes);
-app.use('/users', userRoutes);
+app.use('/api', userRoutes);
+app.use('/api/users', userRoutes);
 //console.log(userRoutes, "test-to-see-result");
 app.use('/api/citas', citaRoutes);
 app.use(errorHandler);
