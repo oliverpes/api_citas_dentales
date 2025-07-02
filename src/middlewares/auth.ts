@@ -1,13 +1,18 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 export interface UserPayload {
   id: number;
-  role: 'admin' | 'recepcionista';
+  role: 'admin' | 'recepcionista' | 'superadmin'; // incluye superadmin si lo usas
 }
 
-export function authMiddleware(req: Request, res: Response, next: NextFunction): void {
+export interface AuthRequest extends Request {
+  user?: UserPayload;
+}
+
+export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction): void {
   const auth = req.headers.authorization;
   if (!auth) {
     res.status(401).json({ error: 'No autorizado' });
@@ -25,8 +30,8 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction):
   }
 }
 
-export function requireRole(role: 'admin' | 'recepcionista') {
-  return (req: Request, res: Response, next: NextFunction): void => {
+export function requireRole(role: 'admin' | 'recepcionista' | 'superadmin') {
+  return (req: AuthRequest, res: Response, next: NextFunction): void => {
     if (!req.user || req.user.role !== role) {
       res.status(403).json({ error: 'Permiso denegado' });
       return;

@@ -30,8 +30,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
     const isValid = await bcrypt.compare(password, user.passwordHash);
 
-
-    console.log('Comparando contraseñas:', password, 'vs', user.password);
+    // Cambié user.password por user.passwordHash para que el log sea correcto
+    console.log('Comparando contraseñas:', password, 'vs', user.passwordHash);
     console.log('¿Es válida?', isValid);
 
     if (!isValid) {
@@ -60,7 +60,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 };
 
 // Registro users
-
 export const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, password, role } = req.body;

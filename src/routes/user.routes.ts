@@ -1,12 +1,11 @@
+// src/routes/user.routes.ts
 import { Router } from 'express';
 import { getUsers, createUser } from '../controllers/user.controller';
+import { authMiddleware } from '../middlewares/auth';
 
 const router = Router();
 
-// Ruta para obtener usuarios
-router.get('/', getUsers);
-
-// Ruta para crear nuevo usuario
-router.post('/', createUser);
+router.get('/', authMiddleware, getUsers);
+router.post('/', authMiddleware, createUser);
 
 export default router;
